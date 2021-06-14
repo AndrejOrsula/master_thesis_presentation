@@ -1,0 +1,25 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemeAAU}[2019/12/17]
+
+
+% List of AAU colours
+\definecolor{aau@primary0}      {RGB}{033,026,082}
+\definecolor{aau@primary1}      {RGB}{089,079,191}
+\definecolor{aau@primary2}      {RGB}{084,097,110}
+\definecolor{aau@supplementary0}{RGB}{106,119,132}
+\definecolor{aau@supplementary1}{RGB}{162,172,182}
+\definecolor{aau@supplementary2}{RGB}{222,223,226}
+\definecolor{aau@secondary0}    {RGB}{157,187,029}
+\definecolor{aau@secondary1}    {RGB}{094,150,149}
+\definecolor{aau@secondary2}    {RGB}{223,103,082}
+
+
+% Refer to `beamer`, `handout`, `second` and `trans` modes
+\mode<presentation>
+{
+    % Setting of beamer colours
+    \setbeamercolor{structure}  {fg=aau@primary0}
+    \setbeamercolor{normal text}{fg=aau@primary2}
+    \setbeamercolor{frametitle} {fg=white, bg=aau@primary0}
+    \setbeamercolor{AAU}  {fg=white, bg=aau@primary0}
+}

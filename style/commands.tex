@@ -1,0 +1,14 @@
+\newcommand{\chref}[2]{%
+    \href{#1}{{\usebeamercolor[bg]{AAU}#2}}%
+}
+
+% Remove numbering from footnores
+\makeatletter
+\def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+\makeatother
+% Remove footnote separator
+\renewcommand*\footnoterule{}%
+% Add footnoteref
+\newcommand{\footnoteref}[1]{%
+    \xdef\thefnmark{}\blfootnote{\hspace{-5mm}\tiny #1}%
+}

@@ -1,0 +1,19 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeAAU}[2019/12/17]
+
+
+% Theme options
+\DeclareOptionBeamer{progressstyle} {\PassOptionsToPackage{progressstyle=#1}{beamerouterthemeAAU}}
+\DeclareOptionBeamer{rotationcw}    {\PassOptionsToPackage{rotationcw}      {beamerouterthemeAAU}}
+\DeclareOptionBeamer{shownavsym}    {\PassOptionsToPackage{shownavsym}      {beamerouterthemeAAU}}
+\ProcessOptionsBeamer
+
+
+% Refer to `beamer`, `handout`, `second` and `trans` modes
+\mode<presentation>
+{
+    % Use all `.sty`
+    \useinnertheme{AAU}
+    \useoutertheme{AAU}
+    \usecolortheme{AAU}
+}

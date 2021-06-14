@@ -1,0 +1,129 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemeAAU}[2019/12/17]
+
+
+% Load required packages
+\RequirePackage{tikz}
+\usetikzlibrary{external}
+\RequirePackage{calc}
+\RequirePackage{fp}
+
+
+% Theme options
+\def\beamer@progresscircle{circle}  % Fixed circular counter
+\def\beamer@progresscorner{corner}  % Counter in the lower right corner
+\def\beamer@progressstyle{corner}   % Default to corner
+\DeclareOptionBeamer{progressstyle}{\def\beamer@progressstyle{#1}}
+\DeclareOptionBeamer{rotationcw}{\def\beamer@rotationcw{true}}
+\DeclareOptionBeamer{shownavsym}{\def\beamer@shownavsym{true}}
+\ProcessOptionsBeamer
+
+
+% Define the height of the header
+\newlength{\beamer@headerheight}
+\usebeamerfont{frametitle}
+    \setlength{\beamer@headerheight}{2.0\baselineskip} % <- Header height based on text line height
+\reset@font
+
+% Radius of the logo
+\newlength{\beamer@logodiameter}
+\setlength{\beamer@logodiameter}{\beamer@headerheight} % <- Logo radius based on header height
+
+% Width of the border, i.e. offset of the logo from right edge
+\newlength{\beamer@borderwidth}
+\setlength{\beamer@borderwidth}{2.5mm}
+
+% Inner radius of the logo border
+\newlength{\beamer@logoinnerradius}
+\setlength{\beamer@logoinnerradius}{0.5\beamer@logodiameter}
+
+% Outer radius of the logo border
+\newlength{\beamer@logoouterradius}
+\setlength{\beamer@logoouterradius}{1.25\beamer@logoinnerradius}
+
+% Radius of the counters
+\newlength{\beamer@counterradius}
+\setlength{\beamer@counterradius}{\beamer@logoinnerradius/2+\beamer@logoouterradius/2}
+
+% Refer to `beamer`, `handout`, `second` and `trans` modes
+\mode<presentation>
+{
+    % Headline
+    \setbeamertemplate{headline}{%
+        \begin{beamercolorbox}[wd=1.0\paperwidth,ht=2.25ex,dp=1ex,left]{headfoot}%
+            \usebeamerfont{section in head/foot}\hspace*{3.5ex}%
+            \insertshortauthor| \insertshorttitle%
+        \end{beamercolorbox}%
+        \aauheaderbackground%
+    }
+    
+    
+    % Frame title
+    \setbeamertemplate{frametitle}{%
+        \begin{minipage}[t][\beamer@headerheight][t]{\textwidth-1.5\beamer@logoouterradius}
+            {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}%
+            {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
+        \end{minipage}
+    }
+    
+    % Insert navigation symbols, if desired
+    \ifx\beamer@shownavsym\undefined
+        \setbeamertemplate{navigation symbols}{%
+            %disable navigation symbols
+        }
+    \fi
+    
+    % Progress in the lower right corner, if desired
+    \ifx\beamer@progressstyle\beamer@progresscorner
+        \setbeamertemplate{footline}[frame number]
+    \fi
+}
+    
+    
+% Header background
+\newcommand{\aauheaderbackground}[0]
+{%
+    \tikzexternaldisable
+    \begin{tikzpicture}[overlay]
+    
+    % Determine coordinates of cornes and the logo
+    \coordinate (UL) at (0,0); % Upper left corner of the slide
+    \coordinate (HLR) at (\paperwidth,-\beamer@headerheight); % Lower right of the header
+    \coordinate (logopos) at ([shift={(-\beamer@logoouterradius-\beamer@borderwidth,0.5\beamer@headerheight)}] HLR); % Coordinate of the logo
+    
+    % Draw the background of the header, the circle and the logo
+    {\usebeamercolor{AAU}%
+      \usebeamercolor{normal text}%
+      
+      % Draw the blue background rectangle of the header
+      \draw[draw=none,fill=AAU.bg] (UL) rectangle (HLR);
+      
+      % Draw the outer circle
+      \fill[fill=AAU.fg] (logopos) circle (\beamer@logoouterradius);
+      
+      % Draw the inner circle
+      \fill[fill=normal text.bg] (logopos) circle (\beamer@logoinnerradius);
+      
+      % Place the logo
+      \node at (logopos) {\includegraphics[width=\beamer@logodiameter, height=\beamer@logodiameter]{AAUgraphics/aau_logo_circle}};
+    
+      % Draw progress circle if `progress` is set to `circle`
+      \ifx\beamer@progressstyle\beamer@progresscircle
+        \ifx\beamer@rotationcw\undefined % Counter-clockwise rotation
+          \FPeval\progress{360*\insertframenumber/\inserttotalframenumber}
+        \else% clockwise rotation
+          \FPeval\progress{(-360*\insertframenumber/\inserttotalframenumber)}
+        \fi
+        
+        % Draw the arc
+        \draw[color=AAU.bg,line width=0.5*\beamer@borderwidth] ([xshift=\beamer@counterradius] logopos) arc[radius=\beamer@counterradius, start angle=0, end angle=\progress];
+        \fill[fill=AAU.bg] ([shift={(\progress:\beamer@counterradius)}] logopos) circle (0.25\beamer@borderwidth);
+        
+        % Place the current frame number
+        \node[fill=normal text.bg,draw=AAU.bg,thick,circle,inner sep=0pt,minimum width=0.25\beamer@logodiameter] at ([xshift=\beamer@counterradius]logopos) {{\usebeamercolor[fg]{structure}\insertframenumber}};
+      \fi
+    }
+    \end{tikzpicture}%
+    \tikzexternalenable
+}
+
