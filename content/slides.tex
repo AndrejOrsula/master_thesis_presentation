@@ -91,8 +91,8 @@
 
 \begin{frame}{Task Definition}{Action Space}
     \begin{columns}%
-        \begin{column}{0.4\textwidth}%
-            \begin{block}{Actions in Cartesian Space}
+        \begin{column}{0.55\textwidth}%
+            \begin{block}{Continuous Actions in Cartesian Space}
                 \begin{itemize}
                     \item Translational displacement
                           \begin{itemize}
@@ -112,7 +112,7 @@
             \end{block}
         \end{column}
         %
-        \begin{column}{0.6\textwidth}%
+        \begin{column}{0.45\textwidth}%
             \centering
             \includegraphics[height=6cm]{graphics/action_space.pdf}
         \end{column}
@@ -651,24 +651,6 @@
     }
 \end{frame}
 
-\begin{frame}{Results}{Invariance to Robot - Training and Evaluation}
-    \begin{columns}%
-        \begin{column}{0.55\textwidth}%
-            \centering
-            \includegraphics[height=4.25cm]{graphics/results_ue5_panda_robot.pdf}
-        \end{column}
-        %
-        \begin{column}{0.45\textwidth}%
-            \centering
-            \begin{tabular}{c|cc}
-                                               & \textbf{UR5} & \textbf{Panda} \\ \hline
-                \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular} & 77\%         & 61.5\%         \\[4mm]
-                \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular} & 14.0         & 27.1
-            \end{tabular}
-        \end{column}
-    \end{columns}
-\end{frame}
-
 \begin{frame}{Results}{Sim-to-Real Transfer - Setup}
     \begin{columns}%
         \begin{column}{0.45\textwidth}%
@@ -700,7 +682,36 @@
     }
 \end{frame}
 
-% Add video with failures
+\begin{frame}{Results}{Sim-to-Real Transfer (Video Examples - Failures)}
+    \centering
+    \scalebox{0.15}{%
+        \def \vidwidth{1300px}%
+        \def \vidheight{1008px}%
+        \includemedia[width=\vidwidth,height=\vidheight,activate=pageopen,
+            passcontext,
+            transparent,
+            keepaspectratio,
+            final,
+            noplaybutton,
+            addresource=videos/sim2real_fail_ex1.mp4,
+            flashvars={source=videos/sim2real_fail_ex1.mp4 &loop=true}
+        ]{\includegraphics[width=\vidwidth,height=\vidheight]{videos/sim2real_fail_ex1_0.png}}{VPlayer.swf}
+    }%
+    ~%
+    \scalebox{0.15}{%
+    \def \vidwidth{1300px}%
+    \def \vidheight{1008px}%
+    \includemedia[width=\vidwidth,height=\vidheight,activate=pageopen,
+        passcontext,
+        transparent,
+        keepaspectratio,
+        final,
+        noplaybutton,
+        addresource=videos/sim2real_fail_ex2.mp4,
+        flashvars={source=videos/sim2real_fail_ex2.mp4 &loop=true}
+    ]{\includegraphics[width=\vidwidth,height=\vidheight]{videos/sim2real_fail_ex2_0.png}}{VPlayer.swf}
+}
+\end{frame}
 
 \begin{frame}{Results}{Ablation Studies}
     \centering
@@ -729,6 +740,8 @@
 \section{Conclusion}
 
 \begin{frame}[fragile]{Conclusion}{}
+    \vspace{-0.3cm}
+
     \begin{block}{Primary Contributions}
         \begin{itemize}
             \item Simulation environment with domain randomisation
@@ -736,16 +749,21 @@
         \end{itemize}
     \end{block}
 
+    \begin{block}{Safety}
+        \begin{itemize}
+            \item Not safe enough on its own -- traditional collision avoidance is required
+        \end{itemize}
+    \end{block}
+
     \begin{block}{Performance and Scalability}
         \begin{itemize}
-            \item Slow data collection and training
-            \item Parallel workers are needed, with asynchronous updates of policy
+            \item Parallel workers are needed (with asynchronous updates of policy)
         \end{itemize}
     \end{block}
 
     \begin{block}{Reproducibility}
         \begin{itemize}
-            \item Not great for DRL
+            \item Not great (stochasticity of environment)
             \item Pre-built Docker image
         \end{itemize}
         \vspace{-0.2cm}
@@ -758,9 +776,9 @@
 \begin{frame}{Perspective on Reinforcement Learning}{}
     \centering
     \begin{block}{Great approach for learning complex robotics tasks! However, ...}\end{block}
-    
+
     \vspace{0.2cm}
-    
+
     \includegraphics[height=5.2cm]{graphics/actual_rl.pdf}
     \footnoteref{Inspired by: Sergey Levine. 2020. CS 285 at UC Berkeley - L23}
 \end{frame}
