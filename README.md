@@ -5,7 +5,7 @@ This repository contains LaTeX (Beamer) setup for the presentation of my Master'
 Compiled PDF: [**presentation.pdf**](./presentation.pdf)
 
 <a href="./presentation.pdf">
-    <img src="./graphics/_readme/frontpage.svg" width="50%">
+    <img src="./graphics/_readme/frontpage.svg" width="100%">
 </a>
 
 > The PDF contains embedded videos that might not be supported on your browser's default viewer. If that is the case, please try a different viewer. Alternatively, some of the recordings can also be viewed under [YouTube playlist](https://youtube.com/playlist?list=PLzcIGFRbGF3Qr4XSzAjNwOMPaeDn5J6i1).
