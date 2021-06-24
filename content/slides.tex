@@ -1,14 +1,16 @@
+\section{Objective}
+
 \begin{frame}{Vision-Based Robotic Grasping of Diverse Objects}{}
+    \centering
     \begin{columns}%
         \begin{column}{0.5\textwidth}%
             \centering
-            \hspace{-0.5cm}
-            \includegraphics[height=4.75cm]{graphics/setup_sketch.pdf}
+            \includegraphics[height=4.3cm]{graphics/setup_sketch.pdf}
         \end{column}
         %
         \begin{column}{0.5\textwidth}%
             \centering
-            \includegraphics[height=4.75cm]{graphics/training_set.png}
+            \includegraphics[height=4.3cm]{graphics/training_set.png}
         \end{column}
     \end{columns}
 \end{frame}
@@ -21,9 +23,9 @@
                     \item Analytical
                     \item Empirical
                           \begin{itemize}
-                              \item Supervised Learning
-                              \item Imitation Learning
-                              \item \only<1>{Reinforcement Learning}\only<2>{\textbf{Reinforcement Learning}}
+                              \item Supervised learning
+                              \item Imitation learning
+                              \item \only<1>{Reinforcement learning}\only<2>{\textbf{Reinforcement learning}}
                           \end{itemize}
                 \end{itemize}
             \end{block}
@@ -35,6 +37,8 @@
         \end{column}
     \end{columns}
 \end{frame}
+
+\section{Task Definition}
 
 \begin{frame}{Task Definition}{}
     \begin{columns}%
@@ -84,10 +88,10 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Action Space}{}
+\begin{frame}{Task Definition}{Action Space}
     \begin{columns}%
         \begin{column}{0.4\textwidth}%
-            \begin{block}{Actions in Cartesian space}
+            \begin{block}{Actions in Cartesian Space}
                 \begin{itemize}
                     \item Translational displacement
                           \begin{itemize}
@@ -114,7 +118,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Observation Space}{}
+\begin{frame}{Task Definition}{Observation Space}
     \begin{columns}%
         \begin{column}{0.6\textwidth}%
             \centering
@@ -136,12 +140,12 @@
     \only<1>{\footnoteref{}}\only<2->{\footnoteref{Wang et al. 2017. O-CNN: Octree-based Convolutional Neural Networks for 3D Shape Analysis. ACM Trans. Graph. (SIGGRAPH) 36, 4, Article 72.}}
 \end{frame}
 
-\begin{frame}{Observation Space}{Construction of Octree}
+\begin{frame}{Task Definition}{Observation Space - Construction of Octree}
     \centering
     \includegraphics[width=\textwidth]{graphics/octree_creation_sketch.pdf}
 \end{frame}
 
-\begin{frame}{Observation Space}{Features and Stacks}
+\begin{frame}{Task Definition}{Observation Space - Features and Stacks}
     \begin{columns}%
         \begin{column}{0.5\textwidth}%
             \begin{block}{Features}
@@ -159,7 +163,7 @@
             \end{block}
             \begin{block}{Observation Stacking}
                 \begin{itemize}
-                    \item Three consecutive stacks
+                    \item Three consecutive observations
                 \end{itemize}
             \end{block}
         \end{column}
@@ -171,7 +175,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Reward Function}{}
+\begin{frame}{Task Definition}{Reward Function}
     \begin{columns}%
         \begin{column}{0.5\textwidth}%
             \begin{block}{Composite Reward}
@@ -213,6 +217,38 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{Task Definition}{Summary}
+    \begin{columns}%
+        \begin{column}{0.3\textwidth}%
+            \centering
+            \includegraphics[height=5cm]{graphics/3d_data_representations_only_octree_cropped.pdf}
+        \end{column}
+        %
+        \begin{column}{0.3\textwidth}%
+            \centering
+            \includegraphics[height=4cm]{graphics/action_space.pdf}
+        \end{column}
+        %
+        \begin{column}{0.35\textwidth}%
+            \begin{block}{Reward Function}
+                \begin{itemize}
+                    \item Composite
+                          \begin{itemize}
+                              \item Reach
+                              \item Touch
+                              \item Grasp
+                              \item Lift
+                          \end{itemize}
+                    \item Collision with ground/table
+                    \item Incentive to act quickly
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Reinforcement Learning Algorithms and Network Architecture}
+
 \begin{frame}{Reinforcement Learning}{Algorithms}
     \begin{columns}%
         \begin{column}{0.3\textwidth}%
@@ -247,5 +283,80 @@
     \includegraphics[width=\textwidth]{graphics/actor_critic_network_full.pdf}
 \end{frame}
 
+\section{Simulation Environment}
 
+\begin{frame}{Simulation Environment}{Selection}
+    \begin{columns}%
+        \begin{column}{0.35\textwidth}%
+            \begin{block}{Simulators}
+                \begin{itemize}
+                    \item MuJoCo
+                    \item PyBullet
+                    \item Gazebo Classic
+                    \item \only<1>{Ignition Gazebo}\only<2>{\textbf{Ignition Gazebo}}
+                    \item Isaac
+                    \item Webots
+                    \item Unreal Engine
+                    \item Unity
+                    \item Unigine
+                    \item RaiSim
+                    \item ...
+                \end{itemize}
+            \end{block}
+        \end{column}
+        %
+        \begin{column}{0.65\textwidth}%
+            \centering
+            \onslide<2>{\includegraphics[width=0.65\textwidth]{graphics/ignition_logo.pdf}}
+        \end{column}
+    \end{columns}
+\end{frame}
 
+\begin{frame}{Simulation Environment}{Ignition Gazebo}
+    \begin{columns}%
+        \begin{column}{0.4\textwidth}%
+            \begin{block}{Physics}
+                \vspace{0.2cm}
+
+                \centering
+                \includegraphics[width=0.7\textwidth]{graphics/dart_logo.png}
+            \end{block}
+
+            \vspace{1cm}
+
+            \begin{block}{Rendering}
+                \vspace{0.2cm}
+
+                \centering
+                \includegraphics[width=0.7\textwidth]{graphics/ogre_logo.png}
+            \end{block}
+        \end{column}
+        %
+        \begin{column}{0.6\textwidth}%
+            \onslide<2>{
+                \begin{block}{Gym-Ignition}
+                    \begin{itemize}
+                        \item Interface for Ignition Gazebo
+                        \item Tooling for creation of OpenAI Gym environments
+                    \end{itemize}
+                \end{block}
+            }
+        \end{column}
+    \end{columns}
+    \only<1>{\footnoteref{}}\only<2->{\footnoteref{Ferigo et al. 2020. Gym-Ignition: Reproducible Robotic Simulations for Reinforcement Learning. In 2020 IEEE/SICE International Symposium on System Integration (SII). 885–890.}}
+\end{frame}
+
+\begin{frame}{Simulation Environment}{Domain Randomization}
+    \centering
+    \includegraphics[height=6.5cm]{graphics/datasets_full.png}
+\end{frame}
+
+\begin{frame}{Simulation Environment}{Domain Randomization}
+    \centering
+    \includegraphics[height=6.5cm]{graphics/domain_randomisation.png}
+\end{frame}
+
+\begin{frame}{Simulation Environment}{Environment for Grasping}
+    \centering
+    \only<1>{\includegraphics[height=6cm]{graphics/octree_example_1.pdf}}\only<2>{\includegraphics[height=6cm]{graphics/octree_example_2.pdf}}\only<3>{\includegraphics[height=6cm]{graphics/octree_example_3.pdf}}
+\end{frame}
