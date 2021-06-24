@@ -38,6 +38,7 @@
     \end{columns}
 \end{frame}
 
+
 \section{Task Definition}
 
 \begin{frame}{Task Definition}{}
@@ -122,7 +123,7 @@
     \begin{columns}%
         \begin{column}{0.6\textwidth}%
             \centering
-            \only<1>{\includegraphics[height=6.5cm]{graphics/3d_data_representations.pdf}}\only<2->{\includegraphics[height=6.5cm]{graphics/3d_data_representations_only_octree.pdf}}
+            \only<1>{\includegraphics[height=6cm]{graphics/3d_data_representations.pdf}}\only<2->{\includegraphics[height=6cm]{graphics/3d_data_representations_only_octree.pdf}}
         \end{column}
         %
         \begin{column}{0.4\textwidth}%
@@ -247,6 +248,7 @@
     \end{columns}
 \end{frame}
 
+
 \section{Reinforcement Learning Algorithms and Network Architecture}
 
 \begin{frame}{Reinforcement Learning}{Algorithms}
@@ -282,6 +284,7 @@
     \centering
     \includegraphics[width=\textwidth]{graphics/actor_critic_network_full.pdf}
 \end{frame}
+
 
 \section{Simulation Environment}
 
@@ -337,7 +340,10 @@
                 \begin{block}{Gym-Ignition}
                     \begin{itemize}
                         \item Interface for Ignition Gazebo
-                        \item Tooling for creation of OpenAI Gym environments
+                        \item Tooling for creation of OpenAI Gym environments%
+                              \begin{itemize}
+                                  \item Compatibility with RL frameworks
+                              \end{itemize}
                     \end{itemize}
                 \end{block}
             }
@@ -346,17 +352,128 @@
     \only<1>{\footnoteref{}}\only<2->{\footnoteref{Ferigo et al. 2020. Gym-Ignition: Reproducible Robotic Simulations for Reinforcement Learning. In 2020 IEEE/SICE International Symposium on System Integration (SII). 885–890.}}
 \end{frame}
 
-\begin{frame}{Simulation Environment}{Domain Randomization}
+\begin{frame}{Simulation Environment}{Domain Randomisation}
     \centering
     \includegraphics[height=6.5cm]{graphics/datasets_full.png}
 \end{frame}
 
-\begin{frame}{Simulation Environment}{Domain Randomization}
+\begin{frame}{Simulation Environment}{Domain Randomisation}
     \centering
     \includegraphics[height=6.5cm]{graphics/domain_randomisation.png}
 \end{frame}
 
-\begin{frame}{Simulation Environment}{Environment for Grasping}
+\begin{frame}{Simulation Environment}{Domain Randomisation}
+    \begin{columns}%
+        \begin{column}{0.35\textwidth}%
+            \begin{block}{Random}
+                \begin{itemize}
+                    \item Object
+                          \begin{itemize}
+                              \item Model
+                              \item Scale
+                              \item Mass
+                              \item Friction
+                              \item Pose
+                          \end{itemize}
+                    \item Ground plane texture
+                    \item Initial robot configuration
+                    \item Camera
+                          \begin{itemize}
+                              \item Pose
+                              \item Sensory noise
+                          \end{itemize}
+                \end{itemize}
+            \end{block}
+        \end{column}
+        %
+        \begin{column}{0.65\textwidth}%
+            \centering
+            \includegraphics[height=4.75cm]{graphics/random_camera_pose.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Simulation Environment}{Environment for Training}
     \centering
     \only<1>{\includegraphics[height=6cm]{graphics/octree_example_1.pdf}}\only<2>{\includegraphics[height=6cm]{graphics/octree_example_2.pdf}}\only<3>{\includegraphics[height=6cm]{graphics/octree_example_3.pdf}}
+\end{frame}
+
+\begin{frame}{Training}{Hyperparameters}
+    \begin{columns}%
+        \begin{column}{0.3\textwidth}%
+            \begin{block}{Optimisation}
+                \begin{itemize}
+                    \item Automatic (Optuna)
+                    \item Manual
+                \end{itemize}
+            \end{block}
+        \end{column}
+        %
+        \begin{column}{0.7\textwidth}%
+            \centering
+            \resizebox{0.85\textwidth}{!}{%
+                \begin{tabular}{l|ccc}
+                    \textbf{Hyperparameter}     & \textbf{TD3}                                                    & \textbf{SAC}                                 & \textbf{TQC} \\ \hline
+                    Optimisation Algorithm      & \multicolumn{3}{c}{\begin{tabular}[c]{@{}c@{}}Adam\end{tabular}}                                                                                \\
+                    Learning Rate Schedule      & \multicolumn{3}{c}{Linear, \(1.5 \cdot 10^{-4} \rightarrow 0\)}                                                               \\
+                    Mini-batch Size             & \multicolumn{3}{c}{\(32\)}                                                                                                    \\
+                    Update Frequency            & \multicolumn{3}{c}{After Every Episode}                                                                                       \\
+                    Gradient Steps per Update   & \multicolumn{3}{c}{\(100\)}                                                                                                   \\
+                    Replay Buffer Size          & \multicolumn{3}{c}{\(40000\)}                                                                                                 \\
+                    Discount Factor \(\gamma\)  & \multicolumn{3}{c}{\(0.999\)}                                                                                                 \\
+                    Target Update Rate \(\tau\) & \multicolumn{3}{c}{\(5 \cdot 10^{-5}\)}                                                                                       \\
+                    Number of Critics           & \multicolumn{3}{c}{\(2\)}                                                                                                     \\
+                    Activation Function         & \multicolumn{3}{c}{ReLU}                                                                                                      \\
+                    Exploratory Action Noise    & \multicolumn{3}{c}{\(\mathcal{N}(0, 0.025)\)}                                                                                 \\ \hline
+                    Target Policy Noise         & \(\mathcal{N}(0, 0.25)\)                                        & ---                                          & ---          \\ \hline
+                    Initial Entropy Coefficient & ---                                                             & \multicolumn{2}{c}{\(0.1\)}                                 \\
+                    Entropy Target              & ---                                                             & \multicolumn{2}{c}{\(-dim(\mathcal{A})=-5\)}                \\ \hline
+                    Number of Atoms             & ---                                                             & ---                                          & \(25\)       \\
+                    Number of Truncated Atoms   & ---                                                             & ---                                          & \(3\)        \\
+                \end{tabular}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Training}{Demonstrations and Curriculum}
+    \begin{columns}%
+        \begin{column}{0.5\textwidth}%
+            \begin{block}{Demonstrations}
+                \begin{itemize}
+                    \item Automatic collection of samples
+                          \begin{itemize}
+                              \item Simple scripted policy
+                                    \begin{itemize}
+                                        \item 19\% success rate
+                                    \end{itemize}
+                          \end{itemize}
+                    \item 5k Collected transitions
+                          \begin{itemize}
+                              \item Replaced after 40k steps (buffer size)
+                          \end{itemize}
+                \end{itemize}
+            \end{block}
+        \end{column}
+        %
+        \begin{column}{0.5\textwidth}%
+            \begin{block}{Curriculum}
+                \begin{itemize}
+                    \item Scaling of environment difficulty
+                          \begin{itemize}
+                              \item Number of objects
+                                    \begin{itemize}
+                                        \item 1 \(\rightarrow\) 4
+                                    \end{itemize}
+                              \item Spawn area
+                                    \begin{itemize}
+                                        \item 2.4 cm\(\times\)2.4 cm \(\rightarrow\) 24 cm\(\times\)24 cm
+                                    \end{itemize}
+                          \end{itemize}
+                    \item Full problem at 60\% success rate
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
 \end{frame}
