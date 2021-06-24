@@ -123,7 +123,7 @@
     \begin{columns}%
         \begin{column}{0.6\textwidth}%
             \centering
-            \only<1>{\includegraphics[height=6cm]{graphics/3d_data_representations.pdf}}\only<2->{\includegraphics[height=6cm]{graphics/3d_data_representations_only_octree.pdf}}
+            \only<1>{\includegraphics[height=5.85cm]{graphics/3d_data_representations.pdf}}\only<2->{\includegraphics[height=5.85cm]{graphics/3d_data_representations_only_octree.pdf}}
         \end{column}
         %
         \begin{column}{0.4\textwidth}%
@@ -249,9 +249,9 @@
 \end{frame}
 
 
-\section{Reinforcement Learning Algorithms and Network Architecture}
+\section{Deep Reinforcement Learning Algorithms and Network Architecture}
 
-\begin{frame}{Reinforcement Learning}{Algorithms}
+\begin{frame}{Deep Reinforcement Learning}{Algorithms}
     \begin{columns}%
         \begin{column}{0.3\textwidth}%
             \begin{block}{Actor-Critic Algorithms}
@@ -352,7 +352,7 @@
     \only<1>{\footnoteref{}}\only<2->{\footnoteref{Ferigo et al. 2020. Gym-Ignition: Reproducible Robotic Simulations for Reinforcement Learning. In 2020 IEEE/SICE International Symposium on System Integration (SII). 885–890.}}
 \end{frame}
 
-\begin{frame}{Simulation Environment}{Domain Randomisation}
+\begin{frame}{Simulation Environment}{Datasets}
     \centering
     \includegraphics[height=6.5cm]{graphics/datasets_full.png}
 \end{frame}
@@ -398,6 +398,9 @@
     \only<1>{\includegraphics[height=6cm]{graphics/octree_example_1.pdf}}\only<2>{\includegraphics[height=6cm]{graphics/octree_example_2.pdf}}\only<3>{\includegraphics[height=6cm]{graphics/octree_example_3.pdf}}
 \end{frame}
 
+
+\section{Training}
+
 \begin{frame}{Training}{Hyperparameters}
     \begin{columns}%
         \begin{column}{0.3\textwidth}%
@@ -414,7 +417,7 @@
             \resizebox{0.85\textwidth}{!}{%
                 \begin{tabular}{l|ccc}
                     \textbf{Hyperparameter}     & \textbf{TD3}                                                    & \textbf{SAC}                                 & \textbf{TQC} \\ \hline
-                    Optimisation Algorithm      & \multicolumn{3}{c}{\begin{tabular}[c]{@{}c@{}}Adam\end{tabular}}                                                                                \\
+                    Optimisation Algorithm      & \multicolumn{3}{c}{\begin{tabular}[c]{@{}c@{}}Adam\end{tabular}}                                                                            \\
                     Learning Rate Schedule      & \multicolumn{3}{c}{Linear, \(1.5 \cdot 10^{-4} \rightarrow 0\)}                                                               \\
                     Mini-batch Size             & \multicolumn{3}{c}{\(32\)}                                                                                                    \\
                     Update Frequency            & \multicolumn{3}{c}{After Every Episode}                                                                                       \\
@@ -435,7 +438,6 @@
         \end{column}
     \end{columns}
 \end{frame}
-
 
 \begin{frame}{Training}{Demonstrations and Curriculum}
     \begin{columns}%
@@ -468,7 +470,7 @@
                                     \end{itemize}
                               \item Spawn area
                                     \begin{itemize}
-                                        \item 2.4 cm\(\times\)2.4 cm \(\rightarrow\) 24 cm\(\times\)24 cm
+                                        \item 2.4 cm~\(\times\)~2.4 cm \(\rightarrow\) 24 cm~\(\times\)~24 cm
                                     \end{itemize}
                           \end{itemize}
                     \item Full problem at 60\% success rate
@@ -476,4 +478,289 @@
             \end{block}
         \end{column}
     \end{columns}
+\end{frame}
+
+\section{Results}
+
+\begin{frame}{Results}{Overview}
+    \begin{columns}%
+        \begin{column}{0.5\textwidth}%
+            \begin{block}{Experiments}
+                \begin{itemize}
+                    \item Comparison of actor-critic algorithms
+                    \item Comparison of 2D/2.5D/3D observations
+                    \item Invariance to robot
+                    \item Sim-to-real transfer
+                \end{itemize}
+            \end{block}
+        \end{column}
+        %
+        \begin{column}{0.5\textwidth}%
+            \begin{block}{Ablation Studies}
+                \begin{itemize}
+                    \item No demonstrations
+                    \item No curriculum
+                    \item No colour features
+                    \item No proprioceptive
+                    \item Shared/separate feature extractor
+                          \begin{itemize}
+                              \item Among actor and critics
+                              \item Among observation stacks
+                          \end{itemize}
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Comparison of Actor-Critic Algorithms}
+    \begin{columns}%
+        \begin{column}{0.55\textwidth}%
+            \centering
+            \includegraphics[height=4.25cm]{graphics/results_actor_critic.pdf}
+        \end{column}
+        %
+        \begin{column}{0.45\textwidth}%
+            \centering
+            \begin{tabular}{c|ccc}
+                                               & \textbf{TQC} & \textbf{SAC} & \textbf{TD3} \\ \hline
+                \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular} & 77\%         & 64\%         & 0\%          \\[4mm]
+                \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular} & 14.0         & 29.8         & ---
+            \end{tabular}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Agent Trained with TQC (Video Example)}
+    \centering
+    \vspace{-0.4cm}
+    \scalebox{0.25}{%
+        \def \vidwidth{1500px}%
+        \def \vidheight{800px}%
+        \includemedia[width=\vidwidth,height=\vidheight,activate=pageopen,
+            passcontext,
+            transparent,
+            keepaspectratio,
+            final,
+            noplaybutton,
+            addresource=videos/sim_ur5_rg2.mp4,
+            flashvars={source=videos/sim_ur5_rg2.mp4 &loop=true}
+        ]{\includegraphics[width=\vidwidth,height=\vidheight]{videos/sim_ur5_rg2_0.png}}{VPlayer.swf}
+    }
+\end{frame}
+
+\begin{frame}{Results}{Comparison of 2D/2.5D/3D Observations - Feature Extractor}
+    \centering
+    \only<1>{\includegraphics[width=\textwidth]{graphics/feature_extractor.pdf}}\only<2>{\includegraphics[width=\textwidth]{graphics/image_feature_extractor.pdf}}
+\end{frame}
+
+\begin{frame}{Results}{Comparison of 2D/2.5D/3D Observations - Random Camera Pose}
+    \begin{columns}%
+        \begin{column}{0.55\textwidth}%
+            \centering
+            \includegraphics[height=4.25cm]{graphics/results_2d_25d_3d_random_camera_pose.pdf}
+        \end{column}
+        %
+        \begin{column}{0.45\textwidth}%
+            \centering
+            \begin{tabular}{c|ccc}
+                                               & \textbf{Octree} & \textbf{RGB-D} & \textbf{RGB} \\ \hline
+                \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular} & 77\%            & 5\%            & 3\%          \\[4mm]
+                \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular} & 14.0            & 36.5           & 51.0
+            \end{tabular}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Comparison of 2D/2.5D/3D Observations - Static Camera Pose}
+    \begin{columns}%
+        \begin{column}{0.55\textwidth}%
+            \centering
+            \includegraphics[height=4.25cm]{graphics/results_2d_25d_3d_static_camera_pose.pdf}
+        \end{column}
+        %
+        \begin{column}{0.45\textwidth}%
+            \centering
+            \begin{tabular}{c|ccc}
+                                               & \textbf{Octree} & \textbf{RGB-D} & \textbf{RGB} \\ \hline
+                \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular} & 81.5\%          & 59\%           & 35\%         \\[4mm]
+                \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular} & 24.6            & 9.4            & 9.3
+            \end{tabular}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Invariance to Robot - Training and Evaluation}
+    \begin{columns}%
+        \begin{column}{0.55\textwidth}%
+            \centering
+            \includegraphics[height=4.25cm]{graphics/results_ue5_panda_robot.pdf}
+        \end{column}
+        %
+        \begin{column}{0.45\textwidth}%
+            \centering
+            \begin{tabular}{c|cc}
+                                               & \textbf{UR5} & \textbf{Panda} \\ \hline
+                \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular} & 77\%         & 61.5\%         \\[4mm]
+                \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular} & 14.0         & 27.1
+            \end{tabular}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Invariance to Robot - Transfer of Policy}
+    \centering
+    \begin{columns}%
+        \begin{column}{0.2875\textwidth}%
+            \centering
+            \includegraphics[height=4.3cm]{graphics/ur5_rg2.png}
+        \end{column}
+        %
+        \begin{column}{0.425\textwidth}%
+            \centering
+            \begin{tabular}{cr|cc}
+                                                                &                & \multicolumn{2}{c}{Evaluation}                  \\
+                                                                &                & \textbf{UR5}                   & \textbf{Panda} \\ \hline
+                \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Training\end{tabular}} & \textbf{UR5}   & 77\%                           & 27.5\%         \\
+                                                                & \textbf{Panda} & 75\%                           & 61.5\%
+            \end{tabular}
+        \end{column}
+        %
+        \begin{column}{0.2875\textwidth}%
+            \centering
+            \includegraphics[height=4.3cm]{graphics/panda.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Policy Trained on Panda (Video Example)}
+    \centering
+    \vspace{-0.4cm}
+    \scalebox{0.25}{%
+        \def \vidwidth{1500px}%
+        \def \vidheight{800px}%
+        \includemedia[width=\vidwidth,height=\vidheight,activate=pageopen,
+            passcontext,
+            transparent,
+            keepaspectratio,
+            final,
+            noplaybutton,
+            addresource=videos/sim_panda.mp4,
+            flashvars={source=videos/sim_panda.mp4 &loop=true}
+        ]{\includegraphics[width=\vidwidth,height=\vidheight]{videos/sim_panda_0.png}}{VPlayer.swf}
+    }
+\end{frame}
+
+\begin{frame}{Results}{Invariance to Robot - Training and Evaluation}
+    \begin{columns}%
+        \begin{column}{0.55\textwidth}%
+            \centering
+            \includegraphics[height=4.25cm]{graphics/results_ue5_panda_robot.pdf}
+        \end{column}
+        %
+        \begin{column}{0.45\textwidth}%
+            \centering
+            \begin{tabular}{c|cc}
+                                               & \textbf{UR5} & \textbf{Panda} \\ \hline
+                \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular} & 77\%         & 61.5\%         \\[4mm]
+                \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular} & 14.0         & 27.1
+            \end{tabular}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Sim-to-Real Transfer - Setup}
+    \begin{columns}%
+        \begin{column}{0.45\textwidth}%
+            \centering
+            \includegraphics[width=\textwidth]{graphics/real_setup.png}
+        \end{column}
+        %
+        \begin{column}{0.55\textwidth}%
+            \centering
+            \includegraphics[width=\textwidth]{graphics/real_objects.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Results}{Sim-to-Real Transfer (Video Example)}
+    \centering
+    \scalebox{0.175}{%
+        \def \vidwidth{2240px}%
+        \def \vidheight{1000px}%
+        \includemedia[width=\vidwidth,height=\vidheight,activate=pageopen,
+            passcontext,
+            transparent,
+            keepaspectratio,
+            final,
+            noplaybutton,
+            addresource=videos/sim2real.mp4,
+            flashvars={source=videos/sim2real.mp4 &loop=true}
+        ]{\includegraphics[width=\vidwidth,height=\vidheight]{videos/sim2real_0.png}}{VPlayer.swf}
+    }
+\end{frame}
+
+% Add video with failures
+
+\begin{frame}{Results}{Ablation Studies}
+    \centering
+    \vspace{-0.5cm}
+    \includegraphics[height=4.5cm]{graphics/results_ablation_studies.pdf}
+
+    \vspace{0.25cm}
+
+    \resizebox{0.75\textwidth}{!}{%
+        \begin{tabular}{c|ccccccc}
+                                                    &
+            \textbf{\begin{tabular}[c]{@{}c@{}}Full\\Method\end{tabular}} &
+            \textbf{\begin{tabular}[c]{@{}c@{}}No\\Demon-\\strations\end{tabular}} &
+            \textbf{\begin{tabular}[c]{@{}c@{}}No\\Curriculum\end{tabular}} &
+            \textbf{\begin{tabular}[c]{@{}c@{}}No\\Colour\\Features\end{tabular}} &
+            \textbf{\begin{tabular}[c]{@{}c@{}}No\\Proprio-\\ceptive\end{tabular}} &
+            \textbf{\begin{tabular}[c]{@{}c@{}}Separate\\Actor-\\Critic FE\end{tabular}} &
+            \textbf{\begin{tabular}[c]{@{}c@{}}Shared\\Stack\\FE\end{tabular}}                                                        \\ \hline
+            \begin{tabular}[c|]{@{}c@{}}Success\\Rate\end{tabular}          & 77\% & 84\% & 70.5\% & 66.5\% & 75\% & 68.5\% & 79\% \\[4mm]
+
+            \begin{tabular}[c|]{@{}c@{}}Episode\\Length\end{tabular}          & 14.0 & 24.5 & 19.9   & 29.4   & 23.0 & 27.5   & 22.8
+        \end{tabular}}
+\end{frame}
+
+
+\section{Conclusion}
+
+\begin{frame}[fragile]{Conclusion}{}
+    \begin{block}{Primary Contributions}
+        \begin{itemize}
+            \item Simulation environment with domain randomisation
+            \item Octree observations for end-to-end grasping with DRL
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Performance and Scalability}
+        \begin{itemize}
+            \item Slow data collection and training
+            \item Parallel workers are needed, with asynchronous updates of policy
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Reproducibility}
+        \begin{itemize}
+            \item Not great for DRL
+            \item Pre-built Docker image
+        \end{itemize}
+        \vspace{-0.2cm}
+        \begin{lstlisting}[language=bash,basicstyle=\tiny,stepnumber=1,numbersep=10pt,tabsize=4,showspaces=false,showstringspaces=false]
+        drl_grasping/docker/run.bash andrejorsula/drl_grasping:latest ros2 run drl_grasping ex_enjoy_pretrained_agent.bash
+        \end{lstlisting}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Perspective on Reinforcement Learning}{}
+    \centering
+    \begin{block}{Great approach for learning complex robotics tasks! However, ...}\end{block}
+    
+    \vspace{0.2cm}
+    
+    \includegraphics[height=5.2cm]{graphics/actual_rl.pdf}
+    \footnoteref{Inspired by: Sergey Levine. 2020. CS 285 at UC Berkeley - L23}
 \end{frame}
