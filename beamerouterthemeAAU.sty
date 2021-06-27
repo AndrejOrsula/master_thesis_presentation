@@ -92,20 +92,20 @@
     \coordinate (logopos) at ([shift={(-\beamer@logoouterradius-\beamer@borderwidth,0.5\beamer@headerheight)}] HLR); % Coordinate of the logo
     
     % Draw the background of the header, the circle and the logo
-    {\usebeamercolor{AAU}%
+    {\usebeamercolor{frametitle}%
       \usebeamercolor{normal text}%
       
       % Draw the blue background rectangle of the header
-      \draw[draw=none,fill=AAU.bg] (UL) rectangle (HLR);
+      \draw[draw=none,fill=frametitle.bg] (UL) rectangle (HLR);
       
       % Draw the outer circle
-      \fill[fill=AAU.fg] (logopos) circle (\beamer@logoouterradius);
+      \fill[fill=frametitle.fg] (logopos) circle (\beamer@logoouterradius);
       
       % Draw the inner circle
       \fill[fill=normal text.bg] (logopos) circle (\beamer@logoinnerradius);
       
       % Place the logo
-      \node at (logopos) {\includegraphics[width=\beamer@logodiameter, height=\beamer@logodiameter]{AAUgraphics/aau_logo_circle}};
+      \node at (logopos) {\includegraphics[width=\beamer@logodiameter, height=\beamer@logodiameter]{graphics/ign_logo_circle}};
     
       % Draw progress circle if `progress` is set to `circle`
       \ifx\beamer@progressstyle\beamer@progresscircle
@@ -116,11 +116,11 @@
         \fi
         
         % Draw the arc
-        \draw[color=AAU.bg,line width=0.5*\beamer@borderwidth] ([xshift=\beamer@counterradius] logopos) arc[radius=\beamer@counterradius, start angle=0, end angle=\progress];
-        \fill[fill=AAU.bg] ([shift={(\progress:\beamer@counterradius)}] logopos) circle (0.25\beamer@borderwidth);
+        \draw[color=frametitle.bg,line width=0.5*\beamer@borderwidth] ([xshift=\beamer@counterradius] logopos) arc[radius=\beamer@counterradius, start angle=0, end angle=\progress];
+        \fill[fill=frametitle.bg] ([shift={(\progress:\beamer@counterradius)}] logopos) circle (0.25\beamer@borderwidth);
         
         % Place the current frame number
-        \node[fill=normal text.bg,draw=AAU.bg,thick,circle,inner sep=0pt,minimum width=0.25\beamer@logodiameter] at ([xshift=\beamer@counterradius]logopos) {{\usebeamercolor[fg]{structure}\insertframenumber}};
+        \node[fill=normal text.bg,draw=frametitle.bg,thick,circle,inner sep=0pt,minimum width=0.25\beamer@logodiameter] at ([xshift=\beamer@counterradius]logopos) {{\usebeamercolor[fg]{structure}\insertframenumber}};
       \fi
     }
     \end{tikzpicture}%

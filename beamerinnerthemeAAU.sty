@@ -7,14 +7,15 @@
 {
     % Title page
     \setbeamertemplate{title page}{%
+    \setbeamercolor{structure}  {fg=aau@primary0}
+    \setbeamercolor{frametitle} {fg=white, bg=aau@primary0}
+
     \begin{minipage}[c][\textheight][c]{\textwidth}
       \vfill
       \centering
       {\usebeamerfont{title}\usebeamercolor[fg]{title}\textbf{\inserttitle}}
     
       {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}\vspace*{0.25\baselineskip}
-
-      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\textit{Master's Thesis}}\vspace*{\baselineskip}
       
       \begin{beamercolorbox}[wd=\textwidth,center,sep=\baselineskip]{frametitle}%
         {\usebeamerfont{date}\insertdate}\vspace*{\baselineskip}
@@ -30,6 +31,9 @@
     
     % Final page
     \defbeamertemplate{final page}{text}[1]{%
+    \setbeamercolor{structure}  {fg=aau@primary0}
+    \setbeamercolor{frametitle} {fg=white, bg=aau@primary0}
+
     \begin{minipage}[c][\textheight][c]{\textwidth}
       \centering
       \vfill
