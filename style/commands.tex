@@ -2,7 +2,7 @@
     \href{#1}{{\usebeamercolor[bg]{AAU}#2}}%
 }
 
-% Remove numbering from footnores
+% Remove numbering from footnotes
 \makeatletter
 \def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
 \makeatother
@@ -11,4 +11,8 @@
 % Add footnoteref
 \newcommand{\footnoteref}[1]{%
     \xdef\thefnmark{}\blfootnote{\hspace{-5mm}\tiny #1}%
+}
+
+\newcommand{\agendaref}[1]{%
+    \xdef\thefnmark{}\blfootnote{\hspace{-1.4cm}\scriptsize #1}%
 }
